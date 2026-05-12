@@ -2,34 +2,38 @@ import java.util.InputMismatchException;//Importar para su uso
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 public class Ejercicio1{
     public static void main(String [] args){
         File archivo = new File("entrada.txt");
+        PrintWriter salida = null;
         Scanner teclado = null; 
         int a, b;
         
         try{
             teclado = new Scanner(archivo);
+            salida = new PrintWriter("salida.txt");
 
-            System.out.println("Escribe el primer numero: ");
             a = teclado.nextInt();
-            System.out.println("Escribe el segundo Número:");
             b = teclado.nextInt();
-            System.out.println("La división es:" + a/b);
+            salida.println("La división es:" + a/b);
         }
         catch(InputMismatchException e){
-            System.out.println("Entrada no valida");
+            salida.println("Entrada no valida");
         }
         catch(ArithmeticException e){
-            System.out.println("No se puede dividir entre 0");
+            salida.println("No se puede dividir entre 0");
         }
         catch(FileNotFoundException e){
-            System.out.println("Archivo no encontrado");
+            System.err.println("Archivo no encontrado");
         }
         finally{
             if(teclado != null){
                 teclado.close();
+            }
+            if(salida != null){
+                salida.close();
             }
         }
     }
