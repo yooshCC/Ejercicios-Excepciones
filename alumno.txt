@@ -1,0 +1,3 @@
+123452,Pablo Slazar,6.6
+349571,Chino Campos,7.8
+247312,Luis Enrrique,8.9
