@@ -1,3 +1,2 @@
-123455,Pablo Slazar,6.8
-349571,Chino Campos,8.6
-247312,Luis Enrrique,8.9
+349571,  Chino Campos, 8.6
+247312,  Luis Enrrique, 8.9

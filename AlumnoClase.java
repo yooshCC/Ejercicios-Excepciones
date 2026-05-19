@@ -29,4 +29,5 @@ public class AlumnoClase{
     public int getClave() {
         return clave;
         }
+
 }

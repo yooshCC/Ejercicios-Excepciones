@@ -1,9 +1,9 @@
 public class Principal {
 
     public static void main(String [] args) {
-        AlumnoDAO alumnoDAO = new AlumnoDAO("alumnos.txt");
+        AlumnoDAO alumnoDAO = new AlumnoDAO("alumno.txt");
         try {
-            alumnoDAO.agregaAlumno(new Alumno(98765, "Saul Hernardez", 8.5));
+            alumnoDAO.eliminarALumno(123455);
         }
         catch (EstudianteDuplicadoException e) {
             System.out.println(e.getMessage());
