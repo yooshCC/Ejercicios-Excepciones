@@ -1,46 +1,75 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
 
+// DAO = Data Access Object
 public class AlumnoDAO {
-    // DAO: Data Access Object
     private String nombreArchivo;
 
-    public AlumnoDAO(String nombreArchivo){
+    public AlumnoDAO(String nombreArchivo)  {
         this.nombreArchivo = nombreArchivo;
     }
 
-    public List<Alumno> leerTodos() throws FormatoArchivoExecption{
-        ArrayList<Alumno> listaAlumnos = new ArrayList<>();
+    public List<AlumnoClase> obtenerTodos() throws FormatoArchivoException {
+        List<AlumnoClase> listaAlumnos = new ArrayList<>();
         Scanner entrada = null;
-        
-        //Abrimos el archivo (codigo riegoso = try)
+        File archivo = new File(nombreArchivo);
+        String linea = null;
+        String [] arreglo = null;
+
         try{
-            entrada = new Scanner(new File(nombreArchivo));
-            while(entrada.hasNext()){
-                String linea = entrada.nextLine();
-                String [] arreglo = linea.splitWithDelimiters(",", 3);
+            entrada = new Scanner(archivo);
+            while (entrada.hasNext())   {
+                linea = entrada.nextLine();
+                arreglo = linea.split(",");
                 int clave = Integer.parseInt(arreglo[0]);
-                Double calificacion = Double.parseDouble(arreglo[4]);
-                Alumno alumno = new Alumno(clave, arreglo[2], calificacion);
+                double calificacion = Double.parseDouble(arreglo[2]);
+                AlumnoClase alumno = new AlumnoClase(clave, arreglo[1], calificacion);
                 listaAlumnos.add(alumno);
             }
         }
-        catch(NumberFormatException | ArrayIndexOutOfBoundsException e){
-            throw new FormatoArchivoExecption("Se esperaba un numero en la entrada");
+        catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            throw new FormatoArchivoException("Se esperaba un numero");
         }
-        catch(FileNotFoundException e){
-            System.err.println("Archivo no encontrado" + nombreArchivo);
+        catch (FileNotFoundException e) {
+            System.out.println("Archivo no encontrado: " + nombreArchivo);
         }
-        finally{
-            if(entrada != null){
+        finally {
+            if (entrada != null)    {
                 entrada.close();
             }
         }
 
         return listaAlumnos;
+    }
+
+    public void agregaAlumno(Alumno alumno) {
+        PrintWriter salida = null;
+        FileWriter archivo = null;
+        try{
+            List<AlumnoClase> listaAlumnos = this.obtenerTodos();
+            if (listaAlumnos.contains(alumno))  {
+                throw new EstudianteDuplicadoException("Ya existe un alumno con la misma clave");
+            }
+            archivo = new FileWriter(nombreArchivo, true);
+            salida = new PrintWriter(archivo);
+            salida.println(alumno.toString());
+        }
+        catch (FormatoArchivoException e)   {
+            e.printStackTrace();
+        }
+        catch (IOException e)   {
+            System.out.println("No se puede escribir en el archivo: " + nombreArchivo);
+        }
+        finally {
+            if (salida != null) {
+                salida.close();
+            }
+        }
     }
 }

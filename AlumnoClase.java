@@ -1,38 +1,16 @@
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
-
 public class AlumnoClase{
     private int clave;
     private String nombre;
-    private Double calificacion;
+    private double calificacion;
 
-    public AlumnoClase(int clave, String nombre, Double calificaion){
-        this.clave =clave;
+    public AlumnoClase(int clave, String nombre, double calificacion)    {
+        this.clave = clave;
         this.nombre = nombre;
-        this.calificacion = calificaion;
+        this.calificacion = calificacion;
     }
+
     @Override
-    public String toString()
-    {
-        return clave + "";
-    }
-
-    public void agregaAlumno(Alumno alumno){
-        PrintWriter salida = null;
-        FileWriter archivo = null;
-        try{
-            List<Alumno> alumnos = new this.leerTodos();
-            if(alumnos.contains(alumnos)){
-
-            }
-        }
-        catch(IOException e){
-            System.out.println("Error del archivo" + nombreArchivo);
-        }
-        catch(FormatoArchivoExecption e){
-            System.out.println();
-        }
+    public String toString()    {
+        return clave + ", " + nombre + ", " + calificacion;
     }
 }
