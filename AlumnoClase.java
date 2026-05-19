@@ -13,4 +13,20 @@ public class AlumnoClase{
     public String toString()    {
         return clave + ", " + nombre + ", " + calificacion;
     }
+
+        @Override
+    public boolean equals(Object obj){
+        if ( obj == null || this.getClass() != obj.getClass())    {
+            return false;
+        }
+        AlumnoClase alumno = (AlumnoClase) obj;
+        if(this.clave == alumno.clave)    {
+            return true;
+        }
+        return false;
+    }
+
+    public int getClave() {
+        return clave;
+        }
 }
